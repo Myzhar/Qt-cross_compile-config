@@ -95,7 +95,7 @@ Install packages which we require for OpenGL and for Qt
 apt-get install libegl1-sgx-omap4 libgles2-sgx-omap4 libegl1-sgx-omap4-dev libgles2-sgx-omap4-dev libdrm-dev libwayland-dev libgbm-dev libffi-dev
 ```
 
-*TODO AGGIUNGERE PACCHETTI PER LIBRERIE UTILI (zlib, libgif, libjpeg, ecc)*
+*TODO AGGIUNGERE PACCHETTI PER LIBRERIE UTILI (zlib, libgif, libjpeg, openvg, ecc)*
 
 ...and anything else we might need, such as an SSH server
 ```
