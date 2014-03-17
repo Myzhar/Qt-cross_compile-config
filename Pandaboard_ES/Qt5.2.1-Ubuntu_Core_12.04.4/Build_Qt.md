@@ -18,10 +18,17 @@ Now configure (note the last 3 include arguments; these are required due to funk
 the TI repository):
 ```
 ./configure \
+-v \
+-verbose \
 -device linux-pandaboard-g++ \
 -nomake tests -nomake examples \
 -prefix /opt/Qt-5.2.1-Pandaboard \
--sysroot /your_rootfs_path
+-sysroot /your_rootfs_path \
+-confirm-license \
+-opensource \
+-force-pkg-config \
+-make examples \
+-make demos
 ```
 If all goes well, you should be able to run
 ```
