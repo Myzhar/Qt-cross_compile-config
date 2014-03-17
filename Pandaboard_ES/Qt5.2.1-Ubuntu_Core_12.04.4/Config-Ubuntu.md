@@ -17,11 +17,12 @@ Get **qemu-utils**:
 ```
 apt-get install qemu-utils
 ```
+
 And create an image
 ```
 qemu-image create disk.img 8G
 ```
-8G means 8 gigabyte. Feel free to choose a different size!
+8G means 8 gigabyte. Feel free to choose a different size according to the SD Card suited on the Pandaboard!
 
 Let’s create a few partitions. We need a small partition (32mb in the example) for the bootloader, and the rest of the card can be ext4:
 
@@ -29,18 +30,21 @@ Partition the image
 ```
 printf ",32,C,*\n,,L\n\n\n" | sfdisk -uM -D disk.img
 ```
+
 Format boot partition
 ```
 sudo losetup /dev/loop0 disk.img -o 32256 --sizelimit 41094144
 sudo mkfs.vfat -F 32 -n "bootfs" /dev/loop0
 sudo losetup -d /dev/loop0
 ```
+
 Format root partition
 ```
 sudo losetup /dev/loop0 disk.img -o 41126400
 sudo mkfs.ext4 -L "rootfs" /dev/loop0
 sudo losetup -d /dev/loop0
 ```
+
 And now it’s time to put some files on our image. Let’s start with the Ubuntu core rootfs, available from here [cdimage.ubuntu.com](http://cdimage.ubuntu.com).
 
 Mount the rootfs
@@ -48,11 +52,13 @@ Mount the rootfs
 mkdir rootfs
 sudo mount -o loop,offset=41126400 disk.img rootfs
 ```
+
 Download & unpack Ubuntu Core
 ```
 wget http://cdimage.ubuntu.com/ubuntu-core/releases/12.04.4/release/ubuntu-core-12.04.4-core-armhf.tar.gz
 sudo tar --numeric-owner -xf ubuntu-core-12.04.4-core-armhf.tar.gz -C rootfs/
 ```
+
 Now’s a good time to tweak the file system. Let’s start by installing the packages that we need in order to compile Qt.
 
 Get qemu-user-static so that we can chroot in
@@ -60,25 +66,30 @@ Get qemu-user-static so that we can chroot in
 sudo apt-get install qemu-user-static
 sudo cp /usr/bin/qemu-arm-static rootfs/usr/bin/
 ```
+
 Chroot in
 ```
 sudo chroot rootfs
 ```
+
 Add the **TI PPA** to apt sources
 ```
 printf "deb http://ppa.launchpad.net/tiomap-dev/release/ubuntu precise main\ndeb-src http://ppa.launchpad.net/tiomap-dev/release/ubuntu precise main" > /etc/apt/sources.list.d/ti.list
 apt-key adv --recv-keys --keyserver keyserver.ubuntu.com B2E908737DB60AD5
 ```
+
 Also enable universe
 ```
 sed -i 's/# \(.*\) universe$/\1 universe/g' /etc/apt/sources.list
 ```
+
 Better mount a few things before we start installing
 ```
 mount /dev
 mount /dev/pts
 mount /proc
 ```
+
 And update & upgrade
 ```
 apt-get update
@@ -95,7 +106,7 @@ Install packages which we require for OpenGL and for Qt
 apt-get install libegl1-sgx-omap4 libgles2-sgx-omap4 libegl1-sgx-omap4-dev libgles2-sgx-omap4-dev libdrm-dev libwayland-dev libgbm-dev libffi-dev
 ```
 
-*TODO AGGIUNGERE PACCHETTI PER LIBRERIE UTILI (zlib, libgif, libjpeg, openvg, ecc)*
+*TODO AGGIUNGERE PACCHETTI PER LIBRERIE UTILI (zlib, libgif, libjpeg, openvg, xcb, ecc)*
 
 ...and anything else we might need, such as an SSH server
 ```
@@ -186,5 +197,6 @@ To get the correct path use
 ```
 sudo fdisk -l
 ```
+**Note:** If the SD Card does not work correctly, replace *bs=4M* with *bs=1M*, the **DD** command will take longer to perform.
 
 Now it's time to cross-compile Qt 5.2.1 following the guide *Build_qt*
