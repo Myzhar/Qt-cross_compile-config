@@ -84,7 +84,13 @@ And update & upgrade
 apt-get update
 apt-get upgrade -y
 ```
-Install packages which we require for Qt
+
+Install native compiler and tools:
+```
+apt-get install g++-arm-linux-gnueabihf build-essential
+```
+
+Install packages which we require for OpenGL and for Qt
 ```
 apt-get install libegl1-sgx-omap4 libgles2-sgx-omap4 libegl1-sgx-omap4-dev libgles2-sgx-omap4-dev libdrm-dev libwayland-dev libgbm-dev libffi-dev
 ```
@@ -95,6 +101,7 @@ apt-get install libegl1-sgx-omap4 libgles2-sgx-omap4 libegl1-sgx-omap4-dev libgl
 ```
 apt-get install netbase isc-dhcp-client openssh-server -y
 ```
+
 All done, clean up and get out
 ```
 service udev stop
@@ -119,10 +126,12 @@ EOF
 sudo mv ttyO2.conf rootfs/etc/init/
 sudo chmod +x rootfs/etc/init/ttyO2.conf
 ```
+
 Allow root to login without a password
 ```
 sudo sed -i 's/root:\*/root:/' rootfs/etc/shadow
 ```
+
 When we are done with the rootfs, unmount it:
 ```
 sudo umount rootfs
@@ -139,27 +148,43 @@ fatload mmc 0:1 0x80000000 uImage
 bootm 0x80000000
 EOF
 ```
+
 Compile the script for U-boot
 ```
 mkimage -A arm -T script -C none -n "Boot Image" -d boot.script boot.scr
 ```
+
 Get the kernel and bootloader files from Ubuntu
 ```
 wget http://ports.ubuntu.com/ubuntu-ports/dists/precise/main/installer-armhf/current/images/omap4/netboot/MLO
 wget http://ports.ubuntu.com/ubuntu-ports/dists/precise/main/installer-armhf/current/images/omap4/netboot/u-boot.bin
 wget http://ports.ubuntu.com/ubuntu-ports/dists/precise/main/installer-armhf/current/images/omap4/netboot/uImage
 ```
+
 Mount the boot partition
 ```
 mkdir bootfs
 sudo mount -o loop,offset=32256 disk.img bootfs
 ```
+
 And copy everything over
 ```
 sudo cp MLO u-boot.bin uImage boot.scr bootfs/
 ```
+
 All done, unmount
 ```
 sudo umount bootfs
 ```
+
 Ok, now we’ve got an image. As long as it’s been properly unmounted and we should be able to dd it to an SD card.
+```
+sudo dd bs=4M if=disk.img of=/dev/sdX
+```
+replace *sdX* with the correct path to SD Card. 
+To get the correct path use
+```
+sudo fdisk -l
+```
+
+Now it's time to cross-compile Qt 5.2.1 following the guide *Build_qt*
