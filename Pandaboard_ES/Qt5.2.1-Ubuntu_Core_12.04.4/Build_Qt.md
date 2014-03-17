@@ -28,6 +28,11 @@ Download Pandaboard mkspec and copy it in the right folder:
 cp -R linux-pandaboard-g++ [path_to_qt]/qtbase/mkspecs/devices/
 ```
 
+Fix the relative paths using the *fixQualifiedLibraryPaths* available [here](https://gitorious.org/cross-compile-tools/cross-compile-tools/source/98c51c5939d91884b096dd2fbee859803fd34fef:fixQualifiedLibraryPaths):
+```
+sudo ./fixQualifiedLibraryPaths [your_rootfs_path] [your_crosscompiler_path]
+```
+
 Now configure (note the last 3 include arguments; these are required due to funky placement of the GBM/DRM headers in 
 the TI repository):
 ```
