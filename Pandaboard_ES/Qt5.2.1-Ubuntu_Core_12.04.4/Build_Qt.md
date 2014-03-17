@@ -1,18 +1,22 @@
 Build Qt 5.2.1
 ==============
 
-Make sure you have your native and cross-compilers installed. Ubuntu provides one (so does Linaro):
+Make sure we have our native and cross-compilers installed. 
+Ubuntu provides one for host (so does Linaro):
 ```
 sudo apt-get g++-arm-linux-gnueabihf build-essential
 ```
-You will want to mount that rootfs from the previous section to make life easier when building Qt. From above:
+Mount the rootfs from "Config_Ubuntu" guide to make life easier when building Qt. From above:
 ```
-mkdir rootfs
 sudo mount -o loop,offset=41126400 disk.img rootfs
 ```
 
 Download Pandaboard mkspec and copy it in the right folder:
+
 *TODO creare un file di archivio con i file necessari e renderlo disponibile*
+```
+cp -R linux-pandaboard-g++ [path_to_qt]/qtbase/mkspecs/devices/
+```
 
 Now configure (note the last 3 include arguments; these are required due to funky placement of the GBM/DRM headers in 
 the TI repository):
@@ -22,8 +26,9 @@ the TI repository):
 -verbose \
 -device linux-pandaboard-g++ \
 -nomake tests -nomake examples \
+-device-option CROSS_COMPILE=arm-linux-gnueabihf- \
 -prefix /opt/Qt-5.2.1-Pandaboard \
--sysroot /your_rootfs_path \
+-sysroot [your_rootfs_path] \
 -confirm-license \
 -opensource \
 -force-pkg-config \
