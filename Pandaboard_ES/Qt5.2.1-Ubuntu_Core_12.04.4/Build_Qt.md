@@ -30,6 +30,7 @@ cp -R linux-pandaboard-g++ [path_to_qt]/qtbase/mkspecs/devices/
 
 Fix the relative paths using the *fixQualifiedLibraryPaths* available [here](https://gitorious.org/cross-compile-tools/cross-compile-tools/source/98c51c5939d91884b096dd2fbee859803fd34fef:fixQualifiedLibraryPaths):
 ```
+git clone https://git.gitorious.org/cross-compile-tools/cross-compile-tools.git
 sudo ./fixQualifiedLibraryPaths [your_rootfs_path] [your_crosscompiler_path]
 ```
 
@@ -50,7 +51,8 @@ the TI repository):
 -sysroot [your_rootfs_path] \
 -confirm-license \
 -opensource \
--force-pkg-config 
+-force-pkg-config \
+-qpa eglfs
 ```
 
 If all goes well, you should be able to run
