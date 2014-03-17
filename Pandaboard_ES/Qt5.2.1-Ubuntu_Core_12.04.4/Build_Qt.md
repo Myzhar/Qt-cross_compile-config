@@ -9,6 +9,8 @@ Ubuntu provides one for host machine:
 sudo apt-get g++-arm-linux-gnueabihf build-essential
 ```
 
+[*Try to use* **gcc-Linaro-arm-linux-gnueabihf-4.8-2013.09_linux**]
+
 If the host runs Linux 64 bit install 32bit libs:
 ```
 sudo apt-get install ia32-libs
