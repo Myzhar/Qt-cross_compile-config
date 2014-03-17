@@ -22,7 +22,6 @@ the TI repository):
 -nomake tests -nomake examples \
 -prefix /opt/Qt-5.2.1-Pandaboard \
 -sysroot /your_rootfs_path
--I/your_rootfs_path/usr/include -I/your_rootfs_path/usr/include/gbm -I/your_rootfs_path/usr/include/drm
 ```
 If all goes well, you should be able to run
 ```
