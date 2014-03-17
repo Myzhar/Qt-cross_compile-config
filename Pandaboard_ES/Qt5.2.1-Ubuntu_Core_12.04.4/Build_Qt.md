@@ -8,6 +8,12 @@ Ubuntu provides one for host machine:
 ```
 sudo apt-get g++-arm-linux-gnueabihf build-essential
 ```
+
+If the host runs Linux 64 bit install 32bit libs:
+```
+sudo apt-get install ia32-libs
+```
+
 Mount the rootfs from "Config_Ubuntu" guide to make life easier when building Qt. From above:
 ```
 sudo mount -o loop,offset=41126400 disk.img rootfs
