@@ -1,8 +1,10 @@
 Build Qt 5.2.1
 ==============
 
-Make sure we have our native and cross-compilers installed. 
-Ubuntu provides one for host (so does Linaro):
+[Original source: [http://qt-project.org/wiki/TIPandaBoard](http://qt-project.org/wiki/TIPandaBoard)]
+
+Make sure we have our cross-compiler installed. 
+Ubuntu provides one for host machine:
 ```
 sudo apt-get g++-arm-linux-gnueabihf build-essential
 ```
@@ -25,16 +27,19 @@ the TI repository):
 -v \
 -verbose \
 -device linux-pandaboard-g++ \
--nomake tests -nomake examples \
+-nomake tests \
+-nomake examples \
+-make libs \
+-make examples \
+-make demos \
 -device-option CROSS_COMPILE=arm-linux-gnueabihf- \
 -prefix /opt/Qt-5.2.1-Pandaboard \
 -sysroot [your_rootfs_path] \
 -confirm-license \
 -opensource \
--force-pkg-config \
--make examples \
--make demos
+-force-pkg-config 
 ```
+
 If all goes well, you should be able to run
 ```
 make && make install
@@ -48,5 +53,6 @@ Finally copy our new library on the target:
 ```
 cp -R /opt/Qt-5.2.1-Pandaboard/mkspec /your_rootfs_path/usr/local/Qt-5.2.1-Pandaboard
 ```
+
 and add Qt to the system path
 * TODO...*
