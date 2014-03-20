@@ -34,15 +34,13 @@ git clone https://git.gitorious.org/cross-compile-tools/cross-compile-tools.git
 sudo ./fixQualifiedLibraryPaths [your_rootfs_path] [your_crosscompiler_path]
 ```
 
-Now configure (note the last 3 include arguments; these are required due to funky placement of the GBM/DRM headers in 
-the TI repository):
+Now configure (*note the use of the 3rd party libraries, instead of system ones to avoid any conflict of version *):
 ```
 ./configure \
 -v \
 -verbose \
 -device linux-pandaboard-g++ \
 -nomake tests \
--nomake examples \
 -make libs \
 -make examples \
 -make demos \
@@ -52,14 +50,22 @@ the TI repository):
 -confirm-license \
 -opensource \
 -force-pkg-config \
+-qt-zlib \
+-qt-libjpeg \
+-qt-libpng \
+-qt-xcb \
+-qt-xkbcommon \
+-qt-freetype \
+-qt-pcre \
+-qt-harfbuzz \
 -qpa eglfs
 ```
 
 If all goes well, you should be able to run
 ```
-make && make install
+make -jX && make install
 ```
-to finish building Qt. 
+to finish building Qt (*replace* **X** *with the number of core of the host machine to speedup compiling process*).
 
 If an important feature is missing (like OpenGL ES 2), run configure with -v for potentially helpful error messages. 
 It should be possible to build OpenGL ES 2 along with the EGLFS, minimal EGL, and KMS QPA plugins.
