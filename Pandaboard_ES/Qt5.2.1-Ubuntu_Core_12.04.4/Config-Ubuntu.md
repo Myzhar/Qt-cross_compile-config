@@ -49,14 +49,14 @@ And now it’s time to put some files on our image. Let’s start with the Ubunt
 
 Mount the rootfs
 ```
-mkdir rootfs
-sudo mount -o loop,offset=41126400 disk.img rootfs
+sudo mkdir /media/rootfs
+sudo mount -o loop,offset=41126400 disk.img /media/rootfs
 ```
 
 Download & unpack Ubuntu Core
 ```
 wget http://cdimage.ubuntu.com/ubuntu-core/releases/12.04.4/release/ubuntu-core-12.04.4-core-armhf.tar.gz
-sudo tar --numeric-owner -xf ubuntu-core-12.04.4-core-armhf.tar.gz -C rootfs/
+sudo tar --numeric-owner -xf ubuntu-core-12.04.4-core-armhf.tar.gz -C /media/rootfs/
 ```
 
 Now’s a good time to tweak the file system. Let’s start by installing the packages that we need in order to compile Qt.
@@ -64,12 +64,12 @@ Now’s a good time to tweak the file system. Let’s start by installing the pa
 Get qemu-user-static so that we can chroot in
 ```
 sudo apt-get install qemu-user-static
-sudo cp /usr/bin/qemu-arm-static rootfs/usr/bin/
+sudo cp /usr/bin/qemu-arm-static /media/rootfs/usr/bin/
 ```
 
 Chroot in
 ```
-sudo chroot rootfs
+sudo chroot /media/rootfs
 ```
 
 Add the **TI PPA** to apt sources
@@ -120,7 +120,7 @@ umount /proc
 umount /dev/pts
 umount /dev
 exit
-sudo rm rootfs/usr/bin/qemu-arm-static
+sudo rm /media/rootfs/usr/bin/qemu-arm-static
 ```
 
 Here are a few other things which may be handy for development:
@@ -134,18 +134,18 @@ stop on runlevel [!2345]
 respawn
 exec /sbin/getty -L -8 115200 ttyO2
 EOF
-sudo mv ttyO2.conf rootfs/etc/init/
-sudo chmod +x rootfs/etc/init/ttyO2.conf
+sudo mv ttyO2.conf /media/rootfs/etc/init/
+sudo chmod +x /media/rootfs/etc/init/ttyO2.conf
 ```
 
 Allow root to login without a password
 ```
-sudo sed -i 's/root:\*/root:/' rootfs/etc/shadow
+sudo sed -i 's/root:\*/root:/' /media/rootfs/etc/shadow
 ```
 
 When we are done with the rootfs, unmount it:
 ```
-sudo umount rootfs
+sudo umount /media/rootfs
 ```
 
 Now it’s time to deal with the **boot partition**. 
@@ -174,18 +174,18 @@ wget http://ports.ubuntu.com/ubuntu-ports/dists/precise/main/installer-armhf/cur
 
 Mount the boot partition
 ```
-mkdir bootfs
-sudo mount -o loop,offset=32256 disk.img bootfs
+sudo mkdir /media/bootfs
+sudo mount -o loop,offset=32256 disk.img /media/bootfs
 ```
 
 And copy everything over
 ```
-sudo cp MLO u-boot.bin uImage boot.scr bootfs/
+sudo cp MLO u-boot.bin uImage boot.scr /media/bootfs/
 ```
 
 All done, unmount
 ```
-sudo umount bootfs
+sudo umount /media/bootfs
 ```
 
 Ok, now we’ve got an image. As long as it’s been properly unmounted and we should be able to dd it to an SD card.
