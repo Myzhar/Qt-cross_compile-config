@@ -108,7 +108,7 @@ apt-get upgrade -y
 
 Install native compiler and tools:
 ```
-apt-get install g++-arm-linux-gnueabihf build-essential
+apt-get install g++ build-essential
 ```
 
 Install packages which we require for OpenGL and for Qt
