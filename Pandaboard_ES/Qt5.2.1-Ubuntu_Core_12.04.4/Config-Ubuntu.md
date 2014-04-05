@@ -69,12 +69,11 @@ sudo cp /usr/bin/qemu-arm-static /media/rootfs/usr/bin/
 
 Add DNS informations
 ```
-sudo gedit /media/etc/resolv.conf
-```
-insert the following two lines, save and exit
-```
+cat > resolv.conf <<EOF
 nameserver 8.8.8.8
 nameserver 8.8.4.4
+EOF
+sudo mv resolv.conf /media/rootfs/etc/
 ```
 
 Chroot in
