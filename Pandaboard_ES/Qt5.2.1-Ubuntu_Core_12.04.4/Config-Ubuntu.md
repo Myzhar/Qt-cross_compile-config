@@ -67,6 +67,16 @@ sudo apt-get install qemu-user-static
 sudo cp /usr/bin/qemu-arm-static /media/rootfs/usr/bin/
 ```
 
+Add DNS informations
+```
+sudo gedit /media/etc/resolv.conf
+```
+insert the following two lines, save and exit
+```
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+```
+
 Chroot in
 ```
 sudo chroot /media/rootfs
