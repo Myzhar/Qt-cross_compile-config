@@ -20,7 +20,7 @@ apt-get install qemu-utils
 
 And create an image
 ```
-qemu-image create disk.img 8G
+qemu-img create disk.img 8G
 ```
 8G means 8 gigabyte. Feel free to choose a different size according to the SD Card suited on the Pandaboard!
 
