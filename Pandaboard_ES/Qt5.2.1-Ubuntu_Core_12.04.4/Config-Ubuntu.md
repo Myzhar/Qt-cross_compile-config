@@ -113,10 +113,8 @@ apt-get install g++ build-essential
 
 Install packages which we require for OpenGL and for Qt
 ```
-apt-get install libegl1-sgx-omap4 libgles2-sgx-omap4 libegl1-sgx-omap4-dev libgles2-sgx-omap4-dev libdrm-dev libwayland-dev libgbm-dev libffi-dev
+apt-get install libegl1-sgx-omap4 libgles2-sgx-omap4 libegl1-sgx-omap4-dev libgles2-sgx-omap4-dev libdrm-dev libwayland-dev libgbm-dev libffi-dev libx11-xcb-dev libicu-dev libopenvg1-mesa-dev
 ```
-
-*TODO AGGIUNGERE PACCHETTI PER LIBRERIE UTILI (zlib, libgif, libjpeg, openvg, xcb, ecc)*
 
 ...and anything else we might need, such as an SSH server
 ```
