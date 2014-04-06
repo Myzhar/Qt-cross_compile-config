@@ -20,9 +20,9 @@ apt-get install qemu-utils
 
 And create an image
 ```
-qemu-img create disk.img 8G
+qemu-img create disk.img 7G
 ```
-8G means 8 gigabyte. Feel free to choose a different size according to the SD Card suited on the Pandaboard!
+7G means 7 gigabyte. Feel free to choose a different size according to the SD Card suited on the Pandaboard!
 
 Let’s create a few partitions. We need a small partition (32mb in the example) for the bootloader, and the rest of the card can be ext4:
 
